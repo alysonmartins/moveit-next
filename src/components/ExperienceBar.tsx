@@ -1,46 +1,38 @@
 import styles from '../styles/components/ExperienceBar.module.css';
 
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ChallengesContext } from '../contexts/ChallengesContext';
 
 export function ExperienceBar(){
 
-  const [counter, setCounter] = useState(1);
-  const [level, setLevel] = useState(1);
+  const { currentExperience, experienceToNextLevel, upExp } = useContext(ChallengesContext);
 
-  function increment(){
-    if (counter >= 100){
-      setCounter(counter - 99)
-      setLevel(level + 1)
-      alert("Parabéns você chegou no nivel "+ level)
-    }else{
-      setCounter(counter + 1);
-    }
-    
-  }
+  const percentToNextLevel = Math.round(currentExperience * 100) / experienceToNextLevel;
+
 
   return(
   <div>
 
     <header className={styles.experienceBar}>
       
-      <span> 0xp </span>
+      <span> 0 xp </span>
 
       <div>
 
-        <div style={{ width:counter + '%'}} />
+        <div style={{ width:`${percentToNextLevel}%`}} />
 
         <span className={styles.currentExperience}
-        style={{ left:counter + '%' }}>
-          {counter}0 XP
+        style={{ left:`${percentToNextLevel}%` }}>
+          {currentExperience} XP
         </span>
 
       </div>
 
-      <span> 1000xp </span>
+      <span> {experienceToNextLevel} xp </span>
       
     </header>    
       
-      <button onClick={increment}>Get XP</button>
+      <button onClick={upExp}>Get XP</button>
     
      
   </div>
