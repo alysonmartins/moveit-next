@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode, useEffect } from 'react';
 
 import challenges from '../../challenges.json';
 
@@ -18,6 +18,8 @@ interface ChallengesContextData{
   upExp: () => void;
   startNewChallenges: () => void;
   resetChallenge: () => void;
+  completeChallenge: () => void;
+  
 }
 
 
@@ -39,6 +41,12 @@ export function ChallengesProvider({ children }: ChallengesProviderProps){
   const experienceToNextLevel = Math.pow((level + 1 ) * 4, 2);
   const diffExp = (experienceToNextLevel - currentExperience);
 
+  useEffect(() => {
+    Notification.requestPermission;
+  }, [])
+
+
+
   function upExp (){ 
     setCurrentExperience(currentExperience + 10);
     checkExp();
@@ -50,6 +58,8 @@ export function ChallengesProvider({ children }: ChallengesProviderProps){
       alert("Parabéns você chegou no nivel "+ diffExp)
     }
   }
+
+
 
 function levelUp(){
   setLevel(level + 1);
@@ -66,6 +76,28 @@ function resetChallenge() {
   setActiveChallenge(null)
 }
 
+function completeChallenge(){
+  if(!activeChallenge){
+    return;
+  }
+
+  const {amount} = activeChallenge;
+
+  let finalExperience = currentExperience + amount;
+
+
+  if(finalExperience >= experienceToNextLevel){
+    finalExperience = finalExperience - experienceToNextLevel;
+    levelUp();
+
+  }
+
+  setCurrentExperience(finalExperience);
+  setActiveChallenge(null);
+  setChallengesCompleted(challengesCompleted + 1);
+
+}
+
   return (
     <ChallengesContext.Provider value={{ 
       level, 
@@ -77,6 +109,7 @@ function resetChallenge() {
       startNewChallenges,
       activeChallenge,
       resetChallenge,
+      completeChallenge,
       }}>
     {children}
     </ChallengesContext.Provider>
