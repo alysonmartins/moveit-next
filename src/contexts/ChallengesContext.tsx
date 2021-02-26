@@ -42,7 +42,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps){
   const diffExp = (experienceToNextLevel - currentExperience);
 
   useEffect(() => {
-    Notification.requestPermission;
+    Notification.requestPermission();
   }, [])
 
 
@@ -70,6 +70,14 @@ function startNewChallenges(){
   const challenge = challenges[randomChallengeIndex];
 
   setActiveChallenge(challenge);
+
+  new Audio('/notification.mp3').play();
+
+  if (Notification.permission === 'granted'){
+    new Notification('Novo Desafio 🍕', {
+      body: `Valendo ${challenge.amount}xp!`
+    })
+  }
 }
 
 function resetChallenge() {
