@@ -15,7 +15,7 @@
   align-items: center;
   justify-content:space-evenly;
 
-  background: var(--text);
+  /* background: var(--text); */
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
   /* border: 1px solid #9d9d9e; */
   border-radius:5px;
