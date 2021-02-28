@@ -15,7 +15,7 @@ export function ExperienceBar(){
 
     <header className={styles.experienceBar}>
       
-      <span> 0 xp </span>
+      <span> 0 EXP </span>
 
       <div>
 
@@ -28,7 +28,7 @@ export function ExperienceBar(){
 
       </div>
 
-      <span> {experienceToNextLevel} xp </span>
+      <span> {experienceToNextLevel} EXP </span>
       
     </header>    
       
